@@ -157,16 +157,17 @@ public class Weapon:MonoBehaviour
     {
       // Set the end position of beam line. 
       this.line_renderer.SetPosition(1,hit.point);
-      // Get enemy health component.
-      EnemyHealth enemy_health = hit.collider.GetComponent<EnemyHealth>();
-      // If there is enemy health component.
-      if(enemy_health != null)
-      {
-        // Decrease enemy health.
-        enemy_health.HealthDecrease(this.weapon_type.damage);
-        // Add force to the rigidbody that raycast has hit ('hit.normal' is the outward direction of the surface that raycast hit).
-        hit.rigidbody.AddForce(-hit.normal * this.weapon_type.hit_force);
-      }
+      // TO_DO:popraw
+      //// Get enemy health component.
+      //EnemyHealth enemy_health = hit.collider.GetComponent<EnemyHealth>();
+      //// If there is enemy health component.
+      //if(enemy_health != null)
+      //{
+      //  // Decrease enemy health.
+      //  enemy_health.HealthDecrease(this.weapon_type.damage);
+      //  // Add force to the rigidbody that raycast has hit ('hit.normal' is the outward direction of the surface that raycast hit).
+      //  hit.rigidbody.AddForce(-hit.normal * this.weapon_type.hit_force);
+      //}
     }
     // If raycast din't hit anything (e.g. shooting into the sky).
     else
