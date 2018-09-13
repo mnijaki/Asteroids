@@ -14,7 +14,7 @@ MonoBehaviour:
   projectile_name: Laser bolt
   damage: 10
   range: 500
-  velocity: 10
+  velocity: 25
   hit_force: 0
   destroy_clip: {fileID: 0}
   destroy_vfx: {fileID: 0}

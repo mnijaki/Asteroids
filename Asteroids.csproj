@@ -243,11 +243,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\General\GameManager\Scripts\GameManager.cs" />
     <Compile Include="Assets\General\LevelManager\Scripts\LevelChanger.cs" />
     <Compile Include="Assets\General\LevelManager\Scripts\LevelManager.cs" />
     <Compile Include="Assets\General\MusicManager\Scripts\MusicChanger.cs" />
     <Compile Include="Assets\General\MusicManager\Scripts\MusicManager.cs" />
     <Compile Include="Assets\General\Scripts\CursorManager.cs" />
+    <Compile Include="Assets\General\Scripts\DebugBox.cs" />
+    <Compile Include="Assets\General\Scripts\DestroyAfterTime.cs" />
     <Compile Include="Assets\General\Scripts\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\General\Scripts\PlayerPrefsManager.cs" />
     <Compile Include="Assets\General\UI\HUD\Scripts\HudIcons.cs" />
@@ -256,6 +259,10 @@
     <Compile Include="Assets\General\UI\Menu\Scripts\MenuWindowTilt.cs" />
     <Compile Include="Assets\General\UI\Menu\Scripts\PauseMenuManager.cs" />
     <Compile Include="Assets\General\UI\Menu\Scripts\SettingsManager.cs" />
+    <Compile Include="Assets\Hazards\Hazards\Asteroids\Scripts\Asteroid.cs" />
+    <Compile Include="Assets\Hazards\Scripts\Hazard.cs" />
+    <Compile Include="Assets\Hazards\Scripts\HazardSpawner.cs" />
+    <Compile Include="Assets\PlayArea\Scripts\Shredder.cs" />
     <Compile Include="Assets\Player\Scripts\Player.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />

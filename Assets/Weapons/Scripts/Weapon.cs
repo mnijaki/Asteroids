@@ -26,6 +26,8 @@ public class Weapon:MonoBehaviour
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
+  // Hazards parent.
+  private Transform projectiles_parent;
   // Reference to the audio source which will play shooting sound effect.
   private AudioSource audio_source;
   // Time when player will be allowed to fire again, after firing.
@@ -44,8 +46,10 @@ public class Weapon:MonoBehaviour
   // Initialization.
   private void Start()
   {
+    // Create projectiles parent.
+    this.projectiles_parent=new GameObject("Projectiles").transform;
     // Get audio source.
-    this.audio_source = GetComponent<AudioSource>();
+    this.audio_source = GetComponent<AudioSource>();    
     // Equip weapon.
     WeaponEquip(this.weapon_type);
   } // End of Start
@@ -54,7 +58,7 @@ public class Weapon:MonoBehaviour
   private void Update()
   {
     // If the player has pressed the fire button and if enough time has elapsed since he last fired.
-    if((Input.GetButtonDown("Fire1")) && (Time.time>this.next_fire_time))
+    if((Input.GetButton("Fire1")) && (Time.time>this.next_fire_time))
     {
       // Fire weapon.
       Fire();
@@ -68,6 +72,8 @@ public class Weapon:MonoBehaviour
     //        should be array of aviable weapons    
     // Set ammo left.
     AmmoLeftSet(this.weapon_type.initial_ammo);
+    // Set audio clip.
+    this.audio_source.clip=this.weapon_type.fire_clip;
     // Set weapon name.
    // HudIcons.Instance.WeaponNameSet(this.weapon_type.weapon_name);
   } // End of WeaponEquip
@@ -105,11 +111,11 @@ public class Weapon:MonoBehaviour
       // Exit from function.
       return;
     }
-    Debug.Log("x4");
     // Play fire audio.
     this.audio_source.Play();
     // Instantiate projectile.
-    Instantiate(this.weapon_type.projectile,this.transform);
+    //Instantiate(this.weapon_type.projectile,this.weapon_end.position,this.weapon_end.rotation,this.transform);
+    Instantiate(this.weapon_type.projectile,this.weapon_end.position,this.weapon_end.rotation,this.projectiles_parent);
     // Update the time when player can fire next time.
     this.next_fire_time = Time.time + this.weapon_type.fire_rate;    
     

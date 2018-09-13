@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4763417534234700}
   - component: {fileID: 33566615716001178}
   - component: {fileID: 23061833066456356}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 54071156395358664}
   - component: {fileID: 136075357031496254}
   - component: {fileID: 114941890298150742}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LaserBolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae6a8186cb32ef47abb3129457e940b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: {fileID: 11400000, guid: 490c71944c49ed54f9453450edd84949, type: 2}
+  projectile_type: {fileID: 11400000, guid: 490c71944c49ed54f9453450edd84949, type: 2}
 --- !u!136 &136075357031496254
 CapsuleCollider:
   m_ObjectHideFlags: 1

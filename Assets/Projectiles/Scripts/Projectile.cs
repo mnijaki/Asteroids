@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
 
   // Projectile type.
   [Tooltip("Projectile type")]
-  public ProjectileType type;
+  public ProjectileType projectile_type;
 
   #endregion
 
@@ -26,21 +26,28 @@ public class Projectile : MonoBehaviour
   private void Start()
   {
     // Set velocity.
-    this.GetComponent<Rigidbody>().velocity = this.transform.forward * this.type.velocity;
+    this.GetComponent<Rigidbody>().velocity = this.transform.forward * this.projectile_type.velocity;
   } // End of Start
 
   // On collision.
   private void OnTriggerEnter(Collider other)
   {
-    // MN:TO_DO:to powinno byc w enemy health
-    // Increase score.
-    //GameManager.Instance.ScoreIncrease(this.points);
-    // decrease enemy health
+    // If projectile didn't colided with hazard then exit from function.
+    if(other.gameObject.layer!=LayerMask.NameToLayer("hazards"))
+    {
+      return;
+    }
 
+    // TO_DO:collision matrix
+    //TO_DO: sound, effect, 
 
-    // Play sound (used own 'ClipPlayAtPoint' method, becoause default unity method won't give access 
-    // to spatial blend and other settings).
-    MusicManager.Instance.ClipPlayAtPoint(Camera.main.transform.position,0.0F,this.type.destroy_clip);
+    // If there is destroy clip.
+    if(this.projectile_type.destroy_clip != null)
+    {
+      // Play sound (used own 'ClipPlayAtPoint' method, becoause default unity method won't give access 
+      // to spatial blend and other settings).
+      MusicManager.Instance.ClipPlayAtPoint(Camera.main.transform.position,0.0F,this.projectile_type.destroy_clip);
+    }
     // Destroy game object.
     Destroy(this.gameObject);
   } // End of OnTriggerEnter
