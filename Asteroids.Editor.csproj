@@ -391,6 +391,7 @@
     <None Include="Assets\PostProcessing\Resources\Shaders\Uber.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\UberSecondPass.cginc" />
     <None Include="Assets\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
+    <None Include="Assets\SpaceShips\ReadMe.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\LiberationSans - OFL.txt" />

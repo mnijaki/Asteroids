@@ -256,6 +256,7 @@
     <Compile Include="Assets\General\UI\Menu\Scripts\MenuWindowTilt.cs" />
     <Compile Include="Assets\General\UI\Menu\Scripts\PauseMenuManager.cs" />
     <Compile Include="Assets\General\UI\Menu\Scripts\SettingsManager.cs" />
+    <Compile Include="Assets\Player\Scripts\Player.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -301,6 +302,8 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
+    <Compile Include="Assets\Projectiles\Scripts\Projectile.cs" />
+    <Compile Include="Assets\Projectiles\Scripts\ProjectileType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -384,6 +387,7 @@
     <None Include="Assets\PostProcessing\Resources\Shaders\Uber.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\UberSecondPass.cginc" />
     <None Include="Assets\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
+    <None Include="Assets\SpaceShips\ReadMe.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\LiberationSans - OFL.txt" />
