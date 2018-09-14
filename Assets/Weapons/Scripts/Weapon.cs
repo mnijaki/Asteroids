@@ -32,6 +32,7 @@ public class Weapon:MonoBehaviour
   private AudioSource audio_source;
   // Time when player will be allowed to fire again, after firing.
   private float next_fire_time;
+  // TO_DO:
   // Ammo left.
   private int ammo_left;
 

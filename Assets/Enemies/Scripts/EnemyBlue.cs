@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
-// Player.
-public class Player:MonoBehaviour
+// Enemy blue.
+public class EnemyBlue : MonoBehaviour
 {
+
   // ---------------------------------------------------------------------------------------------------------------------
   // Serialized fields                  
   // ---------------------------------------------------------------------------------------------------------------------
@@ -29,15 +29,18 @@ public class Player:MonoBehaviour
   [Range(0.0F,1000.0F)]
   [Tooltip("Vertical speed of player ship")]
   private float ship_speed_vert = 400.0F;
-  // Ship tilt factor.
+  // Enemy destroy effect.
   [SerializeField]
-  [Range(0.0F, 10.0F)]
-  [Tooltip("Ship tilt factor")]
-  public float ship_tilt_factor = 3.0F;
-  // Ship destroy effect.
-  [SerializeField]
-  [Tooltip("Ship destroy effect")]
+  [Tooltip("Enemy destroy effect")]
   private GameObject destroy_vfx;
+  // Weapon type.
+  [SerializeField]
+  [Tooltip("Weapon type")]
+  private WeaponType weapon_type;
+  // End position of weapon.
+  [SerializeField]
+  [Tooltip("End position of weapon")]
+  private Transform weapon_end;
 
   #endregion
 
@@ -54,44 +57,39 @@ public class Player:MonoBehaviour
   private float max_vert;
   // Rigidbody.
   Rigidbody rbdy;
+  // Hazards parent.
+  private Transform projectiles_parent;
+  // Reference to the audio source which will play shooting sound effect.
+  private AudioSource audio_source;
+  // Time when player will be allowed to fire again, after firing.
+  private float next_fire_time;
 
   #endregion
 
 
   // ---------------------------------------------------------------------------------------------------------------------
-  // Public methods.                  
-  // ---------------------------------------------------------------------------------------------------------------------
-  #region
-
-  // Respawn player.
-  public void Respawn(float delay)
-  {
-    // TO_DO
-  } // End of Respawn
-
-  #endregion
-
-
-  // ---------------------------------------------------------------------------------------------------------------------
-  // Private methods.                  
+  // Private methods                  
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
   // Initialization.
   private void Start()
   {
+    // TO_DO
     // Set boundries.
     BoundriesSet();
     // Get rigitbody.
     this.rbdy=this.GetComponent<Rigidbody>();
-  } // End of Start
+    // Set velocity.
+    // TO_DO: popraw
+    this.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-0.3F,0.3F),0.0F,-1.0F) * this.ship_speed_vert;
+    // Get projectiles parent.
+    this.projectiles_parent=GameObject.FindGameObjectWithTag("enemies_projectiles").transform;
+    // Get audio source.
+    this.audio_source = GetComponent<AudioSource>();
 
-  // FixedUpdate (used for physics calculations).
-  private void FixedUpdate()
-  {
-    // Move player ship.
-    PlayerMove();
-  } // End of FixedUpdate
+    InvokeRepeating("Fire",0.0F,this.weapon_type.fire_rate);
+  } // End of Start
 
   // Set boundries.
   private void BoundriesSet()
@@ -101,7 +99,7 @@ public class Player:MonoBehaviour
     // Get left upper corner.
     Vector3 corner = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
     // Set minimum horizonat and vertical values.
-    this.min_hor=corner.x+this.ship_padding_hor;
+    this.min_hor=corner.x+this.ship_padding_hor-10;
     this.min_vert=corner.z+this.ship_padding_vert;
     // Get right down corner.
     corner=Camera.main.ViewportToWorldPoint(new Vector3(1,1,distance));
@@ -110,32 +108,16 @@ public class Player:MonoBehaviour
     this.max_vert=corner.z-this.ship_padding_vert;
   } // End of BoundriesSet
 
-  // Movement.
-  private void PlayerMove()
-  {
-    // Add velocity to ship.
-    this.rbdy.velocity = new Vector3(Input.GetAxis("Horizontal")*this.ship_speed_hor,
-                                     this.rbdy.velocity.y,
-                                     Input.GetAxis("Vertical")*this.ship_speed_vert) * Time.deltaTime;
-    // Clamp ship position to game boundries.
-    this.transform.position = new Vector3(Mathf.Clamp(this.transform.position.x,this.min_hor,this.max_hor),
-                                          this.transform.position.y,
-                                          Mathf.Clamp(this.transform.position.z,this.min_vert,this.max_vert));
-    // Tilt ship depending of how fast ship move.
-    this.rbdy.rotation = Quaternion.Euler(0.0F,0.0F,this.rbdy.velocity.x*-this.ship_tilt_factor);
-  } // End of PlayerMove
-
   // On collision.
   private void OnTriggerEnter(Collider other)
   {
-    // If player didn't colided with hazard, enemies and enemy projectiles then exit from function.
-    if((other.gameObject.layer!=LayerMask.NameToLayer("hazards"))&&
-       (other.gameObject.layer!=LayerMask.NameToLayer("enemies"))&&
-       (other.gameObject.layer!=LayerMask.NameToLayer("enemies_projectiles")))
+    // If enemy didn't colided with projectile and player then exit from function.
+    if((other.gameObject.layer!=LayerMask.NameToLayer("projectiles"))&&
+       (other.gameObject.layer!=LayerMask.NameToLayer("player")))
     {
       return;
     }
-    //TO_DO: sound, healt, effect, points, move it to health system
+    //TO_DO: sound, healt, effect, points, 
     // Decrease health.
     //HealthDown(projectile.DamageGet());
 
@@ -145,6 +127,22 @@ public class Player:MonoBehaviour
     Destroy(this.gameObject);
   } // End of OnTriggerEnter
 
+  // Fire weapon.
+  private void Fire()
+  {
+    
+    // Play fire audio.
+    this.audio_source.Play();
+    // Instantiate projectile.
+    
+    Instantiate(this.weapon_type.projectile,this.weapon_end.position,this.weapon_end.rotation,this.projectiles_parent);
+
+
+    // TO_DO:add burst fire managing.
+    // Actualize ammo left.
+    // AmmoLeftAct(1);
+  } // End of Fire
+
   #endregion
 
-} // End of Player
+} // End of EnemyBlue

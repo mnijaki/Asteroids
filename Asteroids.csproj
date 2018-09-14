@@ -243,6 +243,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Enemies\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Enemies\Scripts\EnemyBlue.cs" />
     <Compile Include="Assets\General\GameManager\Scripts\GameManager.cs" />
     <Compile Include="Assets\General\LevelManager\Scripts\LevelChanger.cs" />
     <Compile Include="Assets\General\LevelManager\Scripts\LevelManager.cs" />
@@ -262,6 +264,7 @@
     <Compile Include="Assets\Hazards\Hazards\Asteroids\Scripts\Asteroid.cs" />
     <Compile Include="Assets\Hazards\Scripts\Hazard.cs" />
     <Compile Include="Assets\Hazards\Scripts\HazardSpawner.cs" />
+    <Compile Include="Assets\PlayArea\Scripts\BackgroundScroller.cs" />
     <Compile Include="Assets\PlayArea\Scripts\Shredder.cs" />
     <Compile Include="Assets\Player\Scripts\Player.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
@@ -310,6 +313,7 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
     <Compile Include="Assets\Projectiles\Scripts\Projectile.cs" />
+    <Compile Include="Assets\Projectiles\Scripts\ProjectileEnemy.cs" />
     <Compile Include="Assets\Projectiles\Scripts\ProjectileType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

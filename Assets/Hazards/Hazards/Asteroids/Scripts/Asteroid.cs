@@ -13,7 +13,7 @@ public class Asteroid : MonoBehaviour
   [Tooltip("Asteroid destroy effect")]
   private GameObject destroy_vfx;
   // Asteroid velocity.
-  [Range(10,500)]
+  [Range(1,500)]
   [Tooltip("Asteroid velocity")]
   public int velocity = 10;
 

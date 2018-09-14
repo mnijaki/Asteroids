@@ -57,27 +57,29 @@ public class HazardSpawner : MonoBehaviour
     this.max_hor = this.min_hor + this.transform.localScale.x;
   } // End of Start
 
+  // 
+  private int counter = 0;
+
   // Update (called once per frame).
   private void Update()
   {    
-    // Loop over array of aviable hazards.
-    foreach(Hazard hazard in this.hazards)
-    {
+   
       // If spawning of enemies is disabled then exit from function.
       if(!GameManager.Instance.IsSpawningEnabled())
       {
         return;
       }
       // If it is time to spawn hazard.
-      if(IsTimeToSpawn(hazard))
+      if(IsTimeToSpawn(this.hazards[this.counter]))
       {
         // Instantiate hazard.
-        Instantiate(hazard,
+        Instantiate(this.hazards[this.counter],
                     new Vector3(Random.Range(this.min_hor,this.max_hor),this.transform.position.y,this.transform.position.z),
                     this.transform.rotation,
                     this.hazards_parent);
+        // 
+        this.counter = Random.Range(0,this.hazards.Length);
       }
-    }
   } // End of Update
 
   // Return information if it is time to spawn hazard.

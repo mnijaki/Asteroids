@@ -6,6 +6,8 @@ TagManager:
   tags:
   - loading_screen
   - hazards_parent
+  - stars
+  - enemies_projectiles
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - hazards
   - player
   - enemies
-  - 
+  - enemies_projectiles
   - 
   - 
   - 
