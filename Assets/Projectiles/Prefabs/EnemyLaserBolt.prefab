@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b961c4288d1051c43bc34ccd7fe8e47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile_type: {fileID: 11400000, guid: 490c71944c49ed54f9453450edd84949, type: 2}
+  projectile_type: {fileID: 11400000, guid: 0e54b1c087c651144abc5aaa71c53fcf, type: 2}
 --- !u!136 &136075357031496254
 CapsuleCollider:
   m_ObjectHideFlags: 1

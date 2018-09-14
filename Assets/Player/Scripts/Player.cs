@@ -122,7 +122,7 @@ public class Player:MonoBehaviour
                                           this.transform.position.y,
                                           Mathf.Clamp(this.transform.position.z,this.min_vert,this.max_vert));
     // Tilt ship depending of how fast ship move.
-    this.rbdy.rotation = Quaternion.Euler(0.0F,0.0F,this.rbdy.velocity.x*-this.ship_tilt_factor);
+    this.transform.rotation = Quaternion.Euler(0.0F,0.0F,this.rbdy.velocity.x*-this.ship_tilt_factor);
   } // End of PlayerMove
 
   // On collision.

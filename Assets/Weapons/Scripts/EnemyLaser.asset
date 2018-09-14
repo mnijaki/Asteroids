@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1434659378279902, guid: 48eb332f68fd7f94d86961c8bc5dff11, type: 2}
   weapon_name: Laser
-  fire_rate: 0.4
+  fire_rate: 2
   is_burst_able: 0
   clip_size: 0
   initial_ammo: 500
