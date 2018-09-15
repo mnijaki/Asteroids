@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 114261015214019178}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Player
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -377,7 +377,6 @@ MonoBehaviour:
   ship_speed_hor: 900
   ship_speed_vert: 600
   ship_tilt_factor: 3
-  destroy_vfx: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
 --- !u!114 &114261015214019178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c4c1fce4471b84e83bddb9f0752e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  init_health: 100
   hit_clip: {fileID: 0}
   destroy_clip: {fileID: 8300000, guid: e6b137e76e491704292616c68e3d7090, type: 3}
   hit_vfx: {fileID: 0}

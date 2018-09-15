@@ -8,11 +8,11 @@ public class PlayerHealth : MonoBehaviour
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
-  // Health.
+  // Starting health.
   [SerializeField]
   [Range(100,500)]
-  [Tooltip("Health of player")]
-  private int health = 100;
+  [Tooltip("Starting health of player")]
+  private int init_health = 100;
   // Player hit clip.
   [SerializeField]
   [Tooltip("Player hit clip")]
@@ -34,15 +34,34 @@ public class PlayerHealth : MonoBehaviour
 
 
   // ---------------------------------------------------------------------------------------------------------------------
+  // Private fields                  
+  // ---------------------------------------------------------------------------------------------------------------------
+  #region
+
+  // Current health.
+  private int health = 100;
+
+  #endregion
+
+
+  // ---------------------------------------------------------------------------------------------------------------------
   // Public methods       
   // ---------------------------------------------------------------------------------------------------------------------
   #region  
+
+  // Get initial health.
+  public int InitHealthGet()
+  {
+    return this.init_health;
+  } // End of InitHealthGet
 
   // Decrease health.
   public void HealthDecrease(int val)
   {
     // Decrease health.
     this.health-=val;
+    // Actualize HUD health.
+    HudIcons.Instance.HealthSet(this.health);
     // If health < 1.
     if(this.health<1)
     {
@@ -74,11 +93,35 @@ public class PlayerHealth : MonoBehaviour
     Instantiate(this.destroy_vfx,this.transform.position,this.transform.rotation);
     // Play clip.
     MusicManager.Instance.ClipPlayAtPoint(this.transform.position,0.0F,0.1F,this.destroy_clip);
+    // Actualize HUD health.
+    HudIcons.Instance.HealthSet(0);
+
+    // TO_DO:
+    // Start default shake of player camera.
+    // GameObject.FindObjectOfType<PlayerCameraShake>().ShakeDefStart();
+
     // Send message to 'GameManager'.
     GameManager.Instance.OnPlayerDestroy();
     // Destroy object.
     Destroy(this.gameObject);
   } // End of PlayerDestroy
+
+  #endregion
+
+
+  // ---------------------------------------------------------------------------------------------------------------------
+  // Private methods       
+  // ---------------------------------------------------------------------------------------------------------------------
+  #region  
+
+  // Initialization.
+  private void Start()
+  {
+    // Set starting health.
+    HudIcons.Instance.HealthSet(this.init_health);
+    // Reset health.
+    this.health=this.init_health;
+  } // End of Start
 
   #endregion
 

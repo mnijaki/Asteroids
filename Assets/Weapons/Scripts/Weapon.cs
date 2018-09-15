@@ -77,7 +77,7 @@ public class Weapon:MonoBehaviour
     this.audio_source.clip=this.weapon_type.fire_clip;
     // TO_DO:
     // Set weapon name.
-    //HudIcons.Instance.WeaponNameSet(this.weapon_type.weapon_name);
+    HudIcons.Instance.WeaponNameSet(this.weapon_type.weapon_name);
   } // End of WeaponEquip
 
   // Set ammo left.
@@ -87,7 +87,7 @@ public class Weapon:MonoBehaviour
     this.ammo_left=ammo_left;
     // TO_DO:
     // Set ammo left in HUD.
-    //HudIcons.Instance.AmmoLeftSet(this.ammo_left);
+    HudIcons.Instance.AmmoLeftSet(this.ammo_left);
   } // End of AmmoLeftSet
 
   // Actualize ammo left.
@@ -102,7 +102,7 @@ public class Weapon:MonoBehaviour
     }
     // TO_DO:
     // Set ammo left in HUD.
-    //HudIcons.Instance.AmmoLeftSet(this.ammo_left);
+    HudIcons.Instance.AmmoLeftSet(this.ammo_left);
   } // End of AmmoLeftAct
 
   // Fire weapon.

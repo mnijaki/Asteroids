@@ -26,11 +26,11 @@ public class GameManager:MonoBehaviour
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
-  // Player lives.
+  // Initial player lives.
   [SerializeField]
   [Range(1,15)]
-  [Tooltip("Player lives")]
-  private int player_lives = 3;
+  [Tooltip("Initial player lives")]
+  private int init_player_lives = 3;
   // Wave duration time (in seconds).
   [SerializeField]
   [Range(5.0F,120.0F)]
@@ -46,6 +46,10 @@ public class GameManager:MonoBehaviour
   [Range(1.0F,10.0F)]
   [Tooltip("Wave start wait duration time (in seconds)")]
   private float wave_start_wait = 3.0F;
+  // Player prefab.
+  [SerializeField]
+  [Tooltip("player prefab")]
+  private GameObject player_prefab;
 
   #endregion
 
@@ -59,8 +63,14 @@ public class GameManager:MonoBehaviour
   private static GameManager _instance;
   // Score.
   private int score = 0;
+  // Player lives.
+  private int player_lives = 0;
+  // Level time.
+  private float lvl_time = 90.0F;
   // Flag if spawning of hazards is enabled.
   private bool is_spawning_enabled = false;
+  // Player.
+  private GameObject player;
 
   #endregion
 
@@ -73,13 +83,29 @@ public class GameManager:MonoBehaviour
   // TO_DO:
   public void OnHazardDestroy(Hazard hazard)
   {
-    // increase score
+    // Increase score.
+    ScoreIncrease(hazard.score_value);
   } // End of OnHazardDestroy 
 
-  // TO_DO:
+  // Event - on player destroy.
   public void OnPlayerDestroy()
   {
-    // increase score
+    // If player have lives.
+    if(Instance.player_lives>0)
+    {
+      // Decrease lives.
+      Instance.player_lives--;
+      // Actualize text.
+      HudIcons.Instance.LivesSet(Instance.player_lives);
+      // Respawn player.
+      StartCoroutine(PlayerRespawn(3.0F));
+    }
+    // If player don't have lives.
+    else
+    {
+      // Load lose screen.
+      LevelManager.Instance.SceneLoad(LevelManager.Scenes.LOSE,3.0F);
+    }
   } // End of OnPlayerDestroy 
 
   // Return flag if spawning of hazards is enabled.
@@ -88,38 +114,13 @@ public class GameManager:MonoBehaviour
     return this.is_spawning_enabled;
   } // End of IsSpawningEnabled
 
-  // Event - on player death.
-  public void OnPlayerDeath()
-  {
-    // If player have lives.
-    if(Instance.player_lives>0)
-    {
-      // Decrease lives.
-      Instance.player_lives--;
-      // TO_DO:
-      
-      // Actualize text.
-      //Gui.Instance.LivesSet(Instance.player_lives);
-
-      // Respawn player with delay.
-      //Instance.player.Respawn(2.0F);
-    }
-    // If player don't have lives.
-    else
-    {
-      // Load lose screen.
-      LevelManager.Instance.SceneLoad(LevelManager.Scenes.LOSE,1.0F);
-    }
-  } // End of OnPlayerDeath
-
   // Event - on score increase.
   public void ScoreIncrease(int val)
   {
     // Actualize score.
     Instance.score += val;
-    // TO_DO:
     // Actualize text.
-    //Gui.Instance.ScoreSet(Instance.score);
+    HudIcons.Instance.ScoreSet(Instance.score);
   } // End of ScoreIncrease
 
   #endregion
@@ -151,24 +152,56 @@ public class GameManager:MonoBehaviour
   {
     // Make sure that game object will not be destroyed after loading next scene.
     GameObject.DontDestroyOnLoad(Instance.gameObject);
+    // Set lives.
+    Instance.player_lives = Instance.init_player_lives;
   } // End of Start
+
+  // Update (called once per frame).
+  void Update()
+  {
+    // If there is hud.
+    if(HudIcons.Instance != null)
+    {
+      // Actualize progress.
+      HudIcons.Instance.TimeSet(this.lvl_time-Time.timeSinceLevelLoad);
+    }
+  } // End of Update
 
   // Event - on level was loaded.
   private void OnLevelWasLoaded(int level)
   {
-    // TO_DO:
-    // Set GUI values.
-    //Gui.Instance.LivesSet(Instance.player_lives);
-    //Gui.Instance.ScoreSet(Instance.score);
+    // If not level then exit from function.
+    if(LevelManager.Instance.CurLvlGet()==LevelManager.Lvls.NONE)
+    {
+      return;
+    }
+    // Instantiate player.
+    this.player=Instantiate(this.player_prefab);
+    // Prepare HUD values.
+    HudIcons.Instance.TimePrepare(0.0F,this.lvl_time);
+    HudIcons.Instance.HealthPrepare(0.0F,this.player.GetComponent<PlayerHealth>().InitHealthGet());
+    // Set HUD values.
+    HudIcons.Instance.TimeSet(this.lvl_time);
+    HudIcons.Instance.LivesSet(Instance.player_lives);
+    HudIcons.Instance.ScoreSet(Instance.score);
     // If first level.
     if(LevelManager.Instance.CurLvlGet()==LevelManager.Lvls.Lvl_01)
     {
       // Enable GUI camera.
-      GameObject.FindGameObjectWithTag("gui_camera").GetComponent<Camera>().enabled=true;
+      GameObject.FindGameObjectWithTag("hud_camera").GetComponent<Camera>().enabled=true;
     }
     // Manage hazards and enemies waves.
     StartCoroutine(WaveManage());
   } // End of OnLevelWasLoaded
+
+  // Respawn player.
+  private IEnumerator PlayerRespawn(float delay)
+  {
+    // Wait for seconds.
+    yield return new WaitForSeconds(delay);
+    // Instantiate player.
+    this.player=Instantiate(this.player_prefab);
+  } // End of PlayerRespawn
 
   // Manage hazards and enemies waves.
   private IEnumerator WaveManage()
