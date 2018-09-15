@@ -8,14 +8,15 @@ public class Asteroid : MonoBehaviour
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
-  // Asteroid destroy effect.
-  [SerializeField]
-  [Tooltip("Asteroid destroy effect")]
-  private GameObject destroy_vfx;
-  // Asteroid velocity.
+  // Asteroid vertical velocity.
   [Range(1,500)]
-  [Tooltip("Asteroid velocity")]
-  public int velocity = 10;
+  [Tooltip("Asteroid vertical velocity")]
+  public int vert_velocity = 10;
+  // Asteroid angular speed.
+  [SerializeField]
+  [Range(0.0F,10.0F)]
+  [Tooltip("Asteroid angular speed")]
+  private float angular_speed = 5.0F;
 
   #endregion
 
@@ -25,11 +26,8 @@ public class Asteroid : MonoBehaviour
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
-  // Angular speed.
-  [SerializeField]
-  [Range(0.0F,10.0F)]
-  [Tooltip("Angular speed")]
-  public float angular_speed = 5.0F;
+  // Health.
+  private HazardHealth health;
 
   #endregion
 
@@ -42,29 +40,35 @@ public class Asteroid : MonoBehaviour
   // Initialization.
   private void Start()
   {
+    // Get health.
+    this.health=this.GetComponent<HazardHealth>();
     // Set random angular speed (remember to set 'AngularDrag' in inspector to 0 - turns off resist of angular velocity).
-    this.GetComponent<Rigidbody>().angularVelocity=Random.insideUnitSphere*this.angular_speed;
-    // Set velocity.
-    this.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-0.3F,0.3F),0.0F,-1.0F) * this.velocity;
+    this.GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere * this.angular_speed;
+    // Set vertical velocity.
+    this.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-0.3F,0.3F),0.0F,-1.0F) * this.vert_velocity;
   } // End of Start
 
   // On collision.
   private void OnTriggerEnter(Collider other)
   {
-    // If asteroid didn't colided with projectile and player then exit from function.
-    if((other.gameObject.layer!=LayerMask.NameToLayer("projectiles"))&&
-       (other.gameObject.layer!=LayerMask.NameToLayer("player")))
+    // If asteroid didn't colided with player and player projectiles then exit from function.
+    if((other.gameObject.layer!=LayerMask.NameToLayer("player"))&&
+       (other.gameObject.layer!=LayerMask.NameToLayer("player_projectiles")))
     {
       return;
     }
-    //TO_DO: sound, healt, effect, points, should also interact with player
-    // Decrease health.
-    //HealthDown(projectile.DamageGet());
-
-    // Instantiate destroy effect.
-    Instantiate(this.destroy_vfx,this.transform.position,this.transform.rotation);
-    // Destroy object.
-    Destroy(this.gameObject);
+    // If collision with player.
+    if(other.gameObject.layer==LayerMask.NameToLayer("player"))
+    {
+      // Destroy hazard.
+      this.health.HazardDestroy();
+    }
+    // If not collision with player.
+    else
+    {
+      // Decrease health.
+      this.health.HealthDecrease(other.GetComponent<ProjectilePlayer>().projectile_type.damage);
+    }
   } // End of OnTriggerEnter
 
   #endregion

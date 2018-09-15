@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 // Weapon.
 public class Weapon:MonoBehaviour
@@ -26,13 +25,13 @@ public class Weapon:MonoBehaviour
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
-  // Hazards parent.
+  // Projectiles parent.
   private Transform projectiles_parent;
-  // Reference to the audio source which will play shooting sound effect.
+  // Reference to the audio source which will play fire clip.
   private AudioSource audio_source;
   // Time when player will be allowed to fire again, after firing.
   private float next_fire_time;
-  // TO_DO:
+  // MN:TO_DO:Need to be implemented.
   // Ammo left.
   private int ammo_left;
 
@@ -47,8 +46,8 @@ public class Weapon:MonoBehaviour
   // Initialization.
   private void Start()
   {
-    // Create projectiles parent.
-    this.projectiles_parent=new GameObject("Projectiles").transform;
+    // Get projectiles parent.
+    this.projectiles_parent=GameObject.FindGameObjectWithTag("projectiles").transform;
     // Get audio source.
     this.audio_source = GetComponent<AudioSource>();    
     // Equip weapon.
@@ -58,8 +57,8 @@ public class Weapon:MonoBehaviour
   // Update (called once per frame).
   private void Update()
   {
-    // If the player has pressed the fire button and if enough time has elapsed since he last fired.
-    if((Input.GetButton("Fire1")) && (Time.time>this.next_fire_time))
+    // If the player has pressed fire button and if enough time has elapsed since he last fired.
+    if((Input.GetButton("Fire1")) && (Time.timeSinceLevelLoad>this.next_fire_time))
     {
       // Fire weapon.
       Fire();
@@ -69,14 +68,16 @@ public class Weapon:MonoBehaviour
   // Equip weapon.
   private void WeaponEquip(WeaponType weapon_type)
   {
-    // TO_DO: equiping weapon shoold change 'this.weapon_type'
-    //        should be array of aviable weapons    
+    // MN:TO_DO:Need to be implemented.
+    // * equiping weapon shoold change 'this.weapon_type'
+    // * create array of aviable weapons    
     // Set ammo left.
     AmmoLeftSet(this.weapon_type.initial_ammo);
     // Set audio clip.
     this.audio_source.clip=this.weapon_type.fire_clip;
+    // TO_DO:
     // Set weapon name.
-   // HudIcons.Instance.WeaponNameSet(this.weapon_type.weapon_name);
+    //HudIcons.Instance.WeaponNameSet(this.weapon_type.weapon_name);
   } // End of WeaponEquip
 
   // Set ammo left.
@@ -84,6 +85,7 @@ public class Weapon:MonoBehaviour
   {
     // Set ammo left.
     this.ammo_left=ammo_left;
+    // TO_DO:
     // Set ammo left in HUD.
     //HudIcons.Instance.AmmoLeftSet(this.ammo_left);
   } // End of AmmoLeftSet
@@ -93,13 +95,14 @@ public class Weapon:MonoBehaviour
   {
     // Set ammo left.
     this.ammo_left-=shells_fired;
-    // If ammo belove 0 then set is as 0;
+    // If ammo below 0 then set is as 0;
     if(this.ammo_left<0)
     {
       this.ammo_left=0;
     }
+    // TO_DO:
     // Set ammo left in HUD.
-    HudIcons.Instance.AmmoLeftSet(this.ammo_left);
+    //HudIcons.Instance.AmmoLeftSet(this.ammo_left);
   } // End of AmmoLeftAct
 
   // Fire weapon.
@@ -108,22 +111,26 @@ public class Weapon:MonoBehaviour
     // If no ammo left.
     if(this.ammo_left==0)
     {
-      // TO_DO: jam sound
+      // MN:TO_DO:Need to be implemented.
+      // * jam sound
+
       // Exit from function.
       return;
     }
     // Play fire audio.
     this.audio_source.Play();
+    // If there is fire effect.
+    if(this.weapon_type.fire_vfx != null)
+    {
+      // Instantiate effect.
+      Instantiate(this.weapon_type.fire_vfx,this.weapon_end.position,this.transform.rotation);
+    }
     // Instantiate projectile.
-    //Instantiate(this.weapon_type.projectile,this.weapon_end.position,this.weapon_end.rotation,this.transform);
-    Instantiate(this.weapon_type.projectile,this.weapon_end.position,this.weapon_end.rotation,this.projectiles_parent);
+    Instantiate(this.weapon_type.projectile,this.weapon_end.position,Quaternion.identity,this.projectiles_parent);
     // Update the time when player can fire next time.
-    this.next_fire_time = Time.time + this.weapon_type.fire_rate;    
-    
-
-    // TO_DO:add burst fire managing.
+    this.next_fire_time = Time.timeSinceLevelLoad + this.weapon_type.fire_rate;    
     // Actualize ammo left.
-   // AmmoLeftAct(1);
+    AmmoLeftAct(1);
   } // End of Fire
 
   #endregion

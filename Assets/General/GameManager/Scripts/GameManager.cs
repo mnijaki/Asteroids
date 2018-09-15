@@ -17,7 +17,6 @@ public class GameManager:MonoBehaviour
       return GameManager._instance;
     }
   }
-  
 
   #endregion
 
@@ -41,7 +40,7 @@ public class GameManager:MonoBehaviour
   [SerializeField]
   [Range(1.0F,10.0F)]
   [Tooltip("Wave break duration time (in seconds)")]
-  private float wave_break_duration = 5.0F;
+  private float wave_break_duration = 7.0F;
   // Wave start wait duration time (in seconds).
   [SerializeField]
   [Range(1.0F,10.0F)]
@@ -58,11 +57,9 @@ public class GameManager:MonoBehaviour
 
   // Single static instance of 'GameManager' (Singelton pattern).
   private static GameManager _instance;
-  // Player.
-  private Player player;
   // Score.
   private int score = 0;
-  // Flag if spawning of hazard and enemies is enabled.
+  // Flag if spawning of hazards is enabled.
   private bool is_spawning_enabled = false;
 
   #endregion
@@ -73,7 +70,19 @@ public class GameManager:MonoBehaviour
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
-  // Return flag if spawning of enemies and hazards is enabled.
+  // TO_DO:
+  public void OnHazardDestroy(Hazard hazard)
+  {
+    // increase score
+  } // End of OnHazardDestroy 
+
+  // TO_DO:
+  public void OnPlayerDestroy()
+  {
+    // increase score
+  } // End of OnPlayerDestroy 
+
+  // Return flag if spawning of hazards is enabled.
   public bool IsSpawningEnabled()
   {
     return this.is_spawning_enabled;
@@ -82,21 +91,20 @@ public class GameManager:MonoBehaviour
   // Event - on player death.
   public void OnPlayerDeath()
   {
-    // If lives is greater than 0.
+    // If player have lives.
     if(Instance.player_lives>0)
     {
       // Decrease lives.
       Instance.player_lives--;
+      // TO_DO:
+      
       // Actualize text.
       //Gui.Instance.LivesSet(Instance.player_lives);
-    }
-    // If player have more than 0 lives.
-    if(Instance.player_lives>0)
-    {
+
       // Respawn player with delay.
-      Instance.player.Respawn(2.0F);
+      //Instance.player.Respawn(2.0F);
     }
-    // If player don't have more than 1 lives.
+    // If player don't have lives.
     else
     {
       // Load lose screen.
@@ -109,6 +117,7 @@ public class GameManager:MonoBehaviour
   {
     // Actualize score.
     Instance.score += val;
+    // TO_DO:
     // Actualize text.
     //Gui.Instance.ScoreSet(Instance.score);
   } // End of ScoreIncrease
@@ -144,20 +153,10 @@ public class GameManager:MonoBehaviour
     GameObject.DontDestroyOnLoad(Instance.gameObject);
   } // End of Start
 
-  // Update.
-  private void Update()
-  {
-     // TO_DO
-  } // End of Update
-
   // Event - on level was loaded.
   private void OnLevelWasLoaded(int level)
   {
     // TO_DO:
-    // Reset time scale (could be changed after entering level exit).
-    //Time.timeScale = 1.0F;
-    // Get player.
-    Instance.player = GameObject.FindObjectOfType<Player>();
     // Set GUI values.
     //Gui.Instance.LivesSet(Instance.player_lives);
     //Gui.Instance.ScoreSet(Instance.score);

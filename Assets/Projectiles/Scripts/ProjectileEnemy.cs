@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-// Projectile.
+// Projectile of enemy.
 public class ProjectileEnemy : MonoBehaviour
 {
   // ---------------------------------------------------------------------------------------------------------------------
@@ -33,22 +31,23 @@ public class ProjectileEnemy : MonoBehaviour
   private void OnTriggerEnter(Collider other)
   {
     // If projectile didn't colided with player then exit from function.
-    if(other.gameObject.layer!=LayerMask.NameToLayer("Player"))
+    if(other.gameObject.layer!=LayerMask.NameToLayer("player"))
     {
       return;
     }
-
-    // TO_DO:collision matrix
-    //TO_DO: sound, effect, 
-
-    // If there is destroy clip.
+    // If there is destroy effect.
+    if(this.projectile_type.destroy_vfx != null)
+    {
+      // Instantiate effect.
+      Instantiate(this.projectile_type.destroy_vfx,this.transform.position,this.transform.rotation);
+    }
+    // It there is destroy clip.
     if(this.projectile_type.destroy_clip != null)
     {
-      // Play sound (used own 'ClipPlayAtPoint' method, becoause default unity method won't give access 
-      // to spatial blend and other settings).
-      MusicManager.Instance.ClipPlayAtPoint(Camera.main.transform.position,0.0F,this.projectile_type.destroy_clip);
+      // Play clip.
+      MusicManager.Instance.ClipPlayAtPoint(this.transform.position,0.0F,0.1F,this.projectile_type.destroy_clip);
     }
-    // Destroy game object.
+    // Destroy object.
     Destroy(this.gameObject);
   } // End of OnTriggerEnter
 

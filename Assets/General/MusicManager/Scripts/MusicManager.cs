@@ -59,7 +59,7 @@ public class MusicManager : MonoBehaviour
 
   // Play clip at point (added this method, because in Unity 'ClipPlayAtPoint()' method you cannot change spatial blend
   // and other settings).
-  public AudioSource ClipPlayAtPoint(Vector3 pos, float spatial_blend, AudioClip clip)
+  public AudioSource ClipPlayAtPoint(Vector3 pos, float spatial_blend, float volume, AudioClip clip)
   {
     // MN:TO_DO:2018/09/10: Add pooling.
     // Create temporary game object.
@@ -70,6 +70,8 @@ public class MusicManager : MonoBehaviour
     AudioSource audio_source = go.AddComponent<AudioSource>();
     // Set spatial blend.
     audio_source.spatialBlend = spatial_blend;
+    // Set volume.
+    audio_source.volume = volume;
     // Set clip.
     audio_source.clip = clip; 
     // Play clip.

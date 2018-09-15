@@ -15,9 +15,9 @@ public class WeaponType : ScriptableObject
   // Name of weapon type.
   [Tooltip("Weapon name")]
   public string weapon_name;
-  // Fire rate (number of shells fired per second).
+  // Fire rate (number of projectiles fired per second).
   [Range(0.1F,5.0F)]
-  [Tooltip("Fire rate (time in seconds how long firing one shell take)")]
+  [Tooltip("Fire rate (time in seconds how long firing one projectiles take)")]
   public float fire_rate = 0.1F;
   // TO_DO: Need to be implemented.
   // Flag if weapon is able to burst fire.
@@ -28,6 +28,7 @@ public class WeaponType : ScriptableObject
   [Range(0,100)]
   [Tooltip("Clip size (0 means no clip)")]
   public int clip_size = 0;
+  // TO_DO:MN:Need to be implemented.
   // Initial ammo.
   [Range(1,1000)]
   [Tooltip("Initial ammo")]
@@ -44,11 +45,10 @@ public class WeaponType : ScriptableObject
   public int weight = 1;
   // Weapon fire audio clip.
   public AudioClip fire_clip;
-  // TO_DO:MN:Need to be implemented.
   // Fire effect.
   [SerializeField]
   [Tooltip("Fire effect")]
-  public GameObject fire_vfx;
+  public ParticleSystem fire_vfx;
 
   #endregion
 

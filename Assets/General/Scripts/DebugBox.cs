@@ -1,14 +1,27 @@
 ﻿using UnityEngine;
 
 // Draw box around object transform.
-public class DebugBox:MonoBehaviour
+public class DebugBox : MonoBehaviour
 {
+  // ---------------------------------------------------------------------------------------------------------------------
+  // Serialized fields          
+  // ---------------------------------------------------------------------------------------------------------------------
+  #region
+
+  // Color of outline.
+  [SerializeField]
+  [Tooltip("Color of outline")]
+  private Color color = Color.red;
+
+  #endregion
+
+
   // ---------------------------------------------------------------------------------------------------------------------
   // Private methods                  
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
-  // Function only for purpose of debbuging area that will check if player is on the ground.
+  // Draw box around object transform.
   private void OnDrawGizmos()
   {
     // Get boundry points.
@@ -25,10 +38,10 @@ public class DebugBox:MonoBehaviour
                                       0.0F,
                                       left_upper.z-this.transform.localScale.z);
     // Draw box.
-    Debug.DrawLine(left_upper,right_upper,Color.red);
-    Debug.DrawLine(right_upper,right_bottom,Color.red);
-    Debug.DrawLine(right_bottom,left_bottom,Color.red);
-    Debug.DrawLine(left_bottom,left_upper,Color.red);
+    Debug.DrawLine(left_upper,right_upper,this.color);
+    Debug.DrawLine(right_upper,right_bottom,this.color);
+    Debug.DrawLine(right_bottom,left_bottom,this.color);
+    Debug.DrawLine(left_bottom,left_upper,this.color);
   } // End of OnDrawGizmos
 
   #endregion

@@ -64,12 +64,12 @@ public class BackgroundScroller : MonoBehaviour
   {
     // Compute new displacement factor of background ('Mathf.Repeat()' is similar to the modulo operator but it 
     // works with floating point numbers).
-    float displacement_factor = Mathf.Repeat(Time.time * this.scroll_speed,this.background_size_vert);
+    float displacement_factor = Mathf.Repeat(Time.timeSinceLevelLoad*this.scroll_speed,this.background_size_vert);
     // Move background.
     this.transform.position = this.start_pos + Vector3.back * displacement_factor;
   } // End of Update
 
-  // MN:TO_DO:2018/09/04:Commented because current implementation could lead to some bugs
+  // MN:TO_DO:Commented because current implementation could lead to some bugs
   // (values of particle system could not be reseted correctly). 
   //// This function is called when the script is loaded or a value is changed in the inspector 
   //// (Called in the editor only).

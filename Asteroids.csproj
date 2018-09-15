@@ -243,14 +243,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Enemies\Scripts\Enemy.cs" />
-    <Compile Include="Assets\Enemies\Scripts\EnemyBlue.cs" />
     <Compile Include="Assets\General\GameManager\Scripts\GameManager.cs" />
     <Compile Include="Assets\General\LevelManager\Scripts\LevelChanger.cs" />
     <Compile Include="Assets\General\LevelManager\Scripts\LevelManager.cs" />
     <Compile Include="Assets\General\MusicManager\Scripts\MusicChanger.cs" />
     <Compile Include="Assets\General\MusicManager\Scripts\MusicManager.cs" />
-    <Compile Include="Assets\General\Scripts\CursorManager.cs" />
+    <Compile Include="Assets\General\Scripts\CursorChanger.cs" />
     <Compile Include="Assets\General\Scripts\DebugBox.cs" />
     <Compile Include="Assets\General\Scripts\DestroyAfterTime.cs" />
     <Compile Include="Assets\General\Scripts\DontDestroyOnLoad.cs" />
@@ -262,11 +260,14 @@
     <Compile Include="Assets\General\UI\Menu\Scripts\PauseMenuManager.cs" />
     <Compile Include="Assets\General\UI\Menu\Scripts\SettingsManager.cs" />
     <Compile Include="Assets\Hazards\Hazards\Asteroids\Scripts\Asteroid.cs" />
+    <Compile Include="Assets\Hazards\Hazards\Enemies\Scripts\Enemy.cs" />
     <Compile Include="Assets\Hazards\Scripts\Hazard.cs" />
+    <Compile Include="Assets\Hazards\Scripts\HazardHealth.cs" />
     <Compile Include="Assets\Hazards\Scripts\HazardSpawner.cs" />
     <Compile Include="Assets\PlayArea\Scripts\BackgroundScroller.cs" />
     <Compile Include="Assets\PlayArea\Scripts\Shredder.cs" />
     <Compile Include="Assets\Player\Scripts\Player.cs" />
+    <Compile Include="Assets\Player\Scripts\PlayerHealth.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\GetSetAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\MinAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Attributes\TrackballAttribute.cs" />
@@ -312,8 +313,8 @@
     <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
     <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
     <Compile Include="Assets\PostProcessing\Utilities\CustomMotionTexture\ExampleWheelController.cs" />
-    <Compile Include="Assets\Projectiles\Scripts\Projectile.cs" />
     <Compile Include="Assets\Projectiles\Scripts\ProjectileEnemy.cs" />
+    <Compile Include="Assets\Projectiles\Scripts\ProjectilePlayer.cs" />
     <Compile Include="Assets\Projectiles\Scripts\ProjectileType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

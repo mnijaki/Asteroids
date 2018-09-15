@@ -2,7 +2,7 @@
 
 // Projectile type.
 [CreateAssetMenu(fileName = "New projectile type", menuName = "Projectile type")]
-public class ProjectileType: ScriptableObject
+public class ProjectileType : ScriptableObject
 {
   // ---------------------------------------------------------------------------------------------------------------------
   // Public fields                  
@@ -16,6 +16,7 @@ public class ProjectileType: ScriptableObject
   [Range(10,500)]
   [Tooltip("Projectile damage")]
   public int damage = 10;
+  // MN:TO_DO:Need to be implemented.
   // Projectile range.
   [Range(10,500)]
   [Tooltip("Projectile range")]
@@ -24,7 +25,7 @@ public class ProjectileType: ScriptableObject
   [Range(10,500)]
   [Tooltip("Projectile velocity")]
   public int velocity = 10;
-  // TO_DO:MN:Need to be implemented.
+  // MN:TO_DO:Need to be implemented.
   // Hit force.
   [Range(0,500)]
   [Tooltip("Hit force")]
@@ -35,7 +36,7 @@ public class ProjectileType: ScriptableObject
   // Projectile destroy effect.
   [SerializeField]
   [Tooltip("Projectile destroy effect")]
-  public GameObject destroy_vfx;
+  public ParticleSystem destroy_vfx;
 
   #endregion
 

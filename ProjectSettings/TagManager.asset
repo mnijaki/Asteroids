@@ -5,9 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - loading_screen
-  - hazards_parent
   - stars
-  - enemies_projectiles
+  - projectiles
+  - hazards
   layers:
   - Default
   - TransparentFX
@@ -17,13 +17,13 @@ TagManager:
   - UI
   - 
   - 
-  - projectiles
-  - shredders
-  - background
-  - hazards
   - player
-  - enemies
-  - enemies_projectiles
+  - player_projectiles
+  - play_area
+  - hazards
+  - hazards_projectiles
+  - shredders
+  - 
   - 
   - 
   - 
@@ -44,22 +44,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: projectiles
-    uniqueID: 1500207765
-    locked: 0
-  - name: shredders
-    uniqueID: 4034879117
-    locked: 0
-  - name: background
-    uniqueID: 4198298241
-    locked: 0
-  - name: hazards
-    uniqueID: 3745687727
-    locked: 0
-  - name: player
-    uniqueID: 1510996685
-    locked: 0
-  - name: enemies
-    uniqueID: 4268807191
     locked: 0

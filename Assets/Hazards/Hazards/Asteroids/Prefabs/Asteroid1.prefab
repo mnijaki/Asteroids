@@ -38,8 +38,9 @@ GameObject:
   - component: {fileID: 4472669985045986}
   - component: {fileID: 54883073158330544}
   - component: {fileID: 136264284008985126}
-  - component: {fileID: 114084941005153932}
   - component: {fileID: 114157540513687708}
+  - component: {fileID: 114205508070460064}
+  - component: {fileID: 114084941005153932}
   m_Layer: 11
   m_Name: Asteroid1
   m_TagString: Untagged
@@ -141,8 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4430dff6668a00498841c0b79b0d9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroy_vfx: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
-  velocity: 10
+  vert_velocity: 10
   angular_speed: 5
 --- !u!114 &114157540513687708
 MonoBehaviour:
@@ -155,7 +155,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d88a82a4d94a14795bf6e4e05a528c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score_value: 10
   seconds_to_spawn: 1
+--- !u!114 &114205508070460064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1127035801696160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9945e878a88d5e549a38c120d557a26c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  hit_clip: {fileID: 0}
+  destroy_clip: {fileID: 8300000, guid: 35a1cefb4888e43499dd0f5a9e7924b1, type: 3}
+  hit_vfx: {fileID: 0}
+  destroy_vfx: {fileID: 19800004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
 --- !u!136 &136264284008985126
 CapsuleCollider:
   m_ObjectHideFlags: 1

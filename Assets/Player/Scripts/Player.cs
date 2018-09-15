@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 // Player.
 public class Player:MonoBehaviour
@@ -34,10 +33,6 @@ public class Player:MonoBehaviour
   [Range(0.0F, 10.0F)]
   [Tooltip("Ship tilt factor")]
   public float ship_tilt_factor = 3.0F;
-  // Ship destroy effect.
-  [SerializeField]
-  [Tooltip("Ship destroy effect")]
-  private GameObject destroy_vfx;
 
   #endregion
 
@@ -47,30 +42,18 @@ public class Player:MonoBehaviour
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
+  // Rigidbody.
+  Rigidbody rbdy;
+  // Health.
+  private PlayerHealth health;
   // Boundries of the game.
   private float min_hor;
   private float max_hor;
   private float min_vert;
   private float max_vert;
-  // Rigidbody.
-  Rigidbody rbdy;
 
   #endregion
-
-
-  // ---------------------------------------------------------------------------------------------------------------------
-  // Public methods.                  
-  // ---------------------------------------------------------------------------------------------------------------------
-  #region
-
-  // Respawn player.
-  public void Respawn(float delay)
-  {
-    // TO_DO
-  } // End of Respawn
-
-  #endregion
-
+  
 
   // ---------------------------------------------------------------------------------------------------------------------
   // Private methods.                  
@@ -80,10 +63,12 @@ public class Player:MonoBehaviour
   // Initialization.
   private void Start()
   {
-    // Set boundries.
-    BoundriesSet();
     // Get rigitbody.
     this.rbdy=this.GetComponent<Rigidbody>();
+    // Get health.
+    this.health=this.GetComponent<PlayerHealth>();
+    // Set boundries.
+    BoundriesSet();
   } // End of Start
 
   // FixedUpdate (used for physics calculations).
@@ -121,28 +106,31 @@ public class Player:MonoBehaviour
     this.transform.position = new Vector3(Mathf.Clamp(this.transform.position.x,this.min_hor,this.max_hor),
                                           this.transform.position.y,
                                           Mathf.Clamp(this.transform.position.z,this.min_vert,this.max_vert));
-    // Tilt ship depending of how fast ship move.
+    // Tilt ship depending of how fast ship is moving.
     this.transform.rotation = Quaternion.Euler(0.0F,0.0F,this.rbdy.velocity.x*-this.ship_tilt_factor);
   } // End of PlayerMove
 
   // On collision.
   private void OnTriggerEnter(Collider other)
   {
-    // If player didn't colided with hazard, enemies and enemy projectiles then exit from function.
+    // If player didn't colided with hazard and hazard projectile then exit from function.
     if((other.gameObject.layer!=LayerMask.NameToLayer("hazards"))&&
-       (other.gameObject.layer!=LayerMask.NameToLayer("enemies"))&&
-       (other.gameObject.layer!=LayerMask.NameToLayer("enemies_projectiles")))
+       (other.gameObject.layer!=LayerMask.NameToLayer("hazards_projectiles")))
     {
       return;
     }
-    //TO_DO: sound, healt, effect, points, move it to health system
-    // Decrease health.
-    //HealthDown(projectile.DamageGet());
-
-    // Instantiate destroy effect.
-    Instantiate(this.destroy_vfx,this.transform.position,this.transform.rotation);
-    // Destroy object.
-    Destroy(this.gameObject);
+    // If collision with hazard.
+    if(other.gameObject.layer==LayerMask.NameToLayer("hazards"))
+    {
+      // Destroy player.
+      this.health.PlayerDestroy();
+    }
+    // If not collision with hazard.
+    else
+    {
+      // Decrease health.
+      this.health.HealthDecrease(other.GetComponent<ProjectileEnemy>().projectile_type.damage);
+    }
   } // End of OnTriggerEnter
 
   #endregion

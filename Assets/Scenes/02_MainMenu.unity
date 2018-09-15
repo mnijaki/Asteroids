@@ -408,6 +408,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114220942249192704, guid: 4632141e3dead9042b90cf8ddd3f8c38,
+        type: 2}
+      propertyPath: wave_break_duration
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4632141e3dead9042b90cf8ddd3f8c38, type: 2}
   m_IsPrefabParent: 0

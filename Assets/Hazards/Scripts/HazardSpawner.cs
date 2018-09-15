@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+// Hazard spawner.
 public class HazardSpawner : MonoBehaviour
 {
   // ---------------------------------------------------------------------------------------------------------------------
@@ -29,6 +28,8 @@ public class HazardSpawner : MonoBehaviour
 
   // Hazards parent.
   private Transform hazards_parent;
+  // Hazard that is currently spawning.
+  private Hazard hazard_spawning;
   // Time since last spawn of hazard.
   private float time_since_last_spawn = 0.0F;
   // Last random spawn value.
@@ -49,7 +50,9 @@ public class HazardSpawner : MonoBehaviour
   private void Start()
   {
     // Find hazards parent.
-    this.hazards_parent=GameObject.FindGameObjectWithTag("hazards_parent").transform;
+    this.hazards_parent=GameObject.FindGameObjectWithTag("hazards").transform;
+    // Set current spawning hazard.
+    this.hazard_spawning = this.hazards[Random.Range(0,this.hazards.Length)];
     // Set initial random value.
     this.last_random=Random.Range(0.0F,4.0F);
     // Get boundry points.
@@ -57,29 +60,25 @@ public class HazardSpawner : MonoBehaviour
     this.max_hor = this.min_hor + this.transform.localScale.x;
   } // End of Start
 
-  // 
-  private int counter = 0;
-
   // Update (called once per frame).
   private void Update()
   {    
-   
-      // If spawning of enemies is disabled then exit from function.
-      if(!GameManager.Instance.IsSpawningEnabled())
-      {
-        return;
-      }
-      // If it is time to spawn hazard.
-      if(IsTimeToSpawn(this.hazards[this.counter]))
-      {
-        // Instantiate hazard.
-        Instantiate(this.hazards[this.counter],
-                    new Vector3(Random.Range(this.min_hor,this.max_hor),this.transform.position.y,this.transform.position.z),
-                    this.transform.rotation,
-                    this.hazards_parent);
-        // 
-        this.counter = Random.Range(0,this.hazards.Length);
-      }
+    // If spawning of enemies is disabled then exit from function.
+    if(!GameManager.Instance.IsSpawningEnabled())
+    {
+      return;
+    }
+    // If it is time to spawn hazard.
+    if(IsTimeToSpawn(this.hazard_spawning))
+    {
+      // Instantiate hazard.
+      Instantiate(this.hazard_spawning,
+                  new Vector3(Random.Range(this.min_hor,this.max_hor),this.transform.position.y,this.transform.position.z),
+                  this.transform.rotation,
+                  this.hazards_parent);
+      // Set new spawning hazard.
+      this.hazard_spawning = this.hazards[Random.Range(0,this.hazards.Length)];
+    }
   } // End of Update
 
   // Return information if it is time to spawn hazard.
@@ -95,6 +94,7 @@ public class HazardSpawner : MonoBehaviour
       // Return true.
       return true;
     }
+    // If it is not time to spawn hazard.
     else
     {
       // Actualize last spawn time.

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4763417534234700}
   - component: {fileID: 33566615716001178}
   - component: {fileID: 23061833066456356}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 54071156395358664}
   - component: {fileID: 136075357031496254}
   - component: {fileID: 114288132088326372}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: EnemyLaserBolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
