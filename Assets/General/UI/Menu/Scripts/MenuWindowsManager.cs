@@ -52,11 +52,38 @@ public class MenuWindowsManager:MonoBehaviour
       return;
     }
     // Open panel of given animator.
-    StartCoroutine(OpenPanel(this.initialy_open_window_anim));
+    StartCoroutine(OpenPanel2(this.initialy_open_window_anim));
   } // End of OnEnable
 
   // Open panel of given animator.
-  public IEnumerator OpenPanel(Animator anim)
+  public void OpenPanel(Animator anim)
+  {
+    // If there is no animator, that mean there is no window to open so exit from function. 
+    if(this.opened_window_anim == anim)
+    {
+      return;
+    }
+    // Set game object associated with animator as active.
+    anim.gameObject.SetActive(true);
+    // ????
+    GameObject newPreviouslySelected = EventSystem.current.currentSelectedGameObject;
+    // Set ame object associated with animator as last element in hierarchy.
+    anim.transform.SetAsLastSibling();
+    // Close currently opened window.
+    CurrOpenedWindowClose();
+    //
+    this.prev_selected_go = newPreviouslySelected;
+    //
+    this.opened_window_anim = anim;
+    this.opened_window_anim.SetBool(this.anim_open_trg_id,true);
+    // 
+    GameObject go = FindFirstEnabledSelectable(anim.gameObject);
+    // Set given game object as selected.
+    EventSystem.current.SetSelectedGameObject(go);
+  } // End of OpenPanel
+
+  // Open panel of given animator.
+  public IEnumerator OpenPanel2(Animator anim)
   {
     // MN:TO_DO:Hotfix becaouse of event system is initialising also in 'OnEnable'
     yield return new WaitForSeconds(0.1F);
@@ -82,7 +109,7 @@ public class MenuWindowsManager:MonoBehaviour
     GameObject go = FindFirstEnabledSelectable(anim.gameObject);
     // Set given game object as selected.
     EventSystem.current.SetSelectedGameObject(go);
-  } // End of OpenPanel
+  } // End of OpenPanel2
 
   // Reset menu to starting settings.
   public void Reset()
