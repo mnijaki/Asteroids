@@ -253,7 +253,6 @@
     <Compile Include="Assets\General\Scripts\DebugBox.cs" />
     <Compile Include="Assets\General\Scripts\DestroyAfterTime.cs" />
     <Compile Include="Assets\General\Scripts\DontDestroyOnLoad.cs" />
-    <Compile Include="Assets\General\Scripts\PackageExporter.cs" />
     <Compile Include="Assets\General\Scripts\PlayerPrefsManager.cs" />
     <Compile Include="Assets\General\UI\HUD\Scripts\HudIcons.cs" />
     <Compile Include="Assets\General\UI\Menu\Scripts\MainMenuManager.cs" />
