@@ -10,7 +10,7 @@ EditorBuildSettings:
     guid: d93761ed59c384441b2b7f347e0c0c8b
   - enabled: 1
     path: Assets/Scenes/01_Lose.unity
-    guid: 93c0530beca37b0438180e41d1ca61bf
+    guid: fecaa2b1d8c062f4d9d542b044618344
   - enabled: 1
     path: Assets/Scenes/01_Win.unity
     guid: 78f248f614fb4ba42a355080675548b0
@@ -28,4 +28,4 @@ EditorBuildSettings:
     guid: 4d296567885292c4d93d2d341b827b0d
   - enabled: 1
     path: Assets/Scenes/03_Lvl_02.unity
-    guid: aed1a6bba46de3c45a7cdd42bc390a44
+    guid: c938e240de81da14184a7175507f0021

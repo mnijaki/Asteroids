@@ -410,15 +410,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114220942249192704, guid: 4632141e3dead9042b90cf8ddd3f8c38,
         type: 2}
-      propertyPath: wave_break_duration
-      value: 7
+      propertyPath: lvl_time
+      value: 21
       objectReference: {fileID: 0}
-    - target: {fileID: 114220942249192704, guid: 4632141e3dead9042b90cf8ddd3f8c38,
-        type: 2}
-      propertyPath: player_prefab
-      value: 
-      objectReference: {fileID: 1780877516790510, guid: 5178cf5e4bd46b445a346df56c81d0af,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4632141e3dead9042b90cf8ddd3f8c38, type: 2}
   m_IsPrefabParent: 0
@@ -544,6 +538,16 @@ Prefab:
         type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114877508497618832, guid: 9a6bfb1285c35624a8c787546b956af8,
+        type: 2}
+      propertyPath: m_Text
+      value: "===================================\nMISSION DESCRIPTION\n===================================\n\nYou
+        are a ship comander, who is defending \nearth from enemy invasion.\n\nGoal
+        of the game is to safly pass through all levels.\n\nBe vigilant and be carefull
+        !!!\nYour death would be an irreparable loss to you...\n\n\n===================================\nControls\n===================================\n\n[W]
+        - move forward\n[S] - move backword\n[A] - move left\n[D] - move right\n\n[LEFT
+        CONTROL] - FIRE\n[LEFT MOUSE BTN] - FIRE"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a6bfb1285c35624a8c787546b956af8, type: 2}

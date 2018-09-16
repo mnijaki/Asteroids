@@ -25,9 +25,9 @@ public class PlayerHealth : MonoBehaviour
   [SerializeField]
   [Tooltip("Player hit particle system")]
   private ParticleSystem hit_vfx;
-  // Player death particle system.
+  // Player destroy particle system.
   [SerializeField]
-  [Tooltip("Player death particle system")]
+  [Tooltip("Player destroy particle system")]
   private ParticleSystem destroy_vfx;
 
   #endregion
@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
   #region
 
   // Current health.
-  private int health = 100;
+  private int health;
 
   #endregion
 
@@ -48,12 +48,6 @@ public class PlayerHealth : MonoBehaviour
   // Public methods       
   // ---------------------------------------------------------------------------------------------------------------------
   #region  
-
-  // Get initial health.
-  public int InitHealthGet()
-  {
-    return this.init_health;
-  } // End of InitHealthGet
 
   // Decrease health.
   public void HealthDecrease(int val)
@@ -71,11 +65,13 @@ public class PlayerHealth : MonoBehaviour
     // If health >= 1.
     else
     {
+      // Start shake of player camera.
+      GameObject.FindObjectOfType<CameraShake>().ShakeOwnStart(0.25F,0.5F);
       // If there is hit effect.
       if(this.hit_vfx != null)
       {
         // Instantiate effect.
-        Instantiate(this.hit_vfx,this.transform.position,this.transform.rotation);
+        Instantiate(this.hit_vfx,this.transform.position,Quaternion.identity);
       }
       // It there is hit clip.
       if(this.hit_clip != null)
@@ -90,16 +86,13 @@ public class PlayerHealth : MonoBehaviour
   public void PlayerDestroy()
   {
     // Instantiate effect.
-    Instantiate(this.destroy_vfx,this.transform.position,this.transform.rotation);
+    Instantiate(this.destroy_vfx,this.transform.position,Quaternion.identity);
     // Play clip.
     MusicManager.Instance.ClipPlayAtPoint(this.transform.position,0.0F,0.1F,this.destroy_clip);
     // Actualize HUD health.
     HudIcons.Instance.HealthSet(0);
-
-    // TO_DO:
     // Start default shake of player camera.
-    // GameObject.FindObjectOfType<PlayerCameraShake>().ShakeDefStart();
-
+    GameObject.FindObjectOfType<CameraShake>().ShakeDefStart();
     // Send message to 'GameManager'.
     GameManager.Instance.OnPlayerDestroy();
     // Destroy object.
@@ -117,10 +110,11 @@ public class PlayerHealth : MonoBehaviour
   // Initialization.
   private void Start()
   {
+    // Prepare HUD values.
+    HudIcons.Instance.HealthPrepare(0.0F,this.init_health);
     // Set starting health.
-    HudIcons.Instance.HealthSet(this.init_health);
-    // Reset health.
     this.health=this.init_health;
+    HudIcons.Instance.HealthSet(this.health);
   } // End of Start
 
   #endregion

@@ -31,7 +31,6 @@ public class Weapon:MonoBehaviour
   private AudioSource audio_source;
   // Time when player will be allowed to fire again, after firing.
   private float next_fire_time;
-  // MN:TO_DO:Need to be implemented.
   // Ammo left.
   private int ammo_left;
 
@@ -75,7 +74,6 @@ public class Weapon:MonoBehaviour
     AmmoLeftSet(this.weapon_type.initial_ammo);
     // Set audio clip.
     this.audio_source.clip=this.weapon_type.fire_clip;
-    // TO_DO:
     // Set weapon name.
     HudIcons.Instance.WeaponNameSet(this.weapon_type.weapon_name);
   } // End of WeaponEquip
@@ -85,7 +83,6 @@ public class Weapon:MonoBehaviour
   {
     // Set ammo left.
     this.ammo_left=ammo_left;
-    // TO_DO:
     // Set ammo left in HUD.
     HudIcons.Instance.AmmoLeftSet(this.ammo_left);
   } // End of AmmoLeftSet
@@ -100,7 +97,6 @@ public class Weapon:MonoBehaviour
     {
       this.ammo_left=0;
     }
-    // TO_DO:
     // Set ammo left in HUD.
     HudIcons.Instance.AmmoLeftSet(this.ammo_left);
   } // End of AmmoLeftAct
@@ -123,7 +119,7 @@ public class Weapon:MonoBehaviour
     if(this.weapon_type.fire_vfx != null)
     {
       // Instantiate effect.
-      Instantiate(this.weapon_type.fire_vfx,this.weapon_end.position,this.transform.rotation);
+      Instantiate(this.weapon_type.fire_vfx,this.weapon_end.position,Quaternion.identity);
     }
     // Instantiate projectile.
     Instantiate(this.weapon_type.projectile,this.weapon_end.position,Quaternion.identity,this.projectiles_parent);

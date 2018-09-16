@@ -46,6 +46,11 @@ public class GameManager:MonoBehaviour
   [Range(1.0F,10.0F)]
   [Tooltip("Wave start wait duration time (in seconds)")]
   private float wave_start_wait = 3.0F;
+  // Level duration time.
+  [SerializeField]
+  [Range(1.0F,360.0F)]
+  [Tooltip("Level duration time")]
+  private float lvl_time = 90.0F;
   // Player prefab.
   [SerializeField]
   [Tooltip("player prefab")]
@@ -64,13 +69,15 @@ public class GameManager:MonoBehaviour
   // Score.
   private int score = 0;
   // Player lives.
-  private int player_lives = 0;
-  // Level time.
-  private float lvl_time = 90.0F;
+  private int player_lives;
   // Flag if spawning of hazards is enabled.
   private bool is_spawning_enabled = false;
-  // Player.
-  private GameObject player;
+  // Level timer coroutine.
+  private Coroutine lvl_timer_cor;
+  // Wave coroutine.
+  private Coroutine wave_cor;
+  // Respawn player coroutine.
+  private Coroutine respawn_cor;
 
   #endregion
 
@@ -80,14 +87,16 @@ public class GameManager:MonoBehaviour
   // ---------------------------------------------------------------------------------------------------------------------
   #region
 
-  // TO_DO:
+  // Message - on hazard destroy.
   public void OnHazardDestroy(Hazard hazard)
   {
-    // Increase score.
-    ScoreIncrease(hazard.score_value);
+    // Actualize score.
+    Instance.score += hazard.score_value;
+    // Actualize text.
+    HudIcons.Instance.ScoreSet(Instance.score);
   } // End of OnHazardDestroy 
 
-  // Event - on player destroy.
+  // Message - on player destroy.
   public void OnPlayerDestroy()
   {
     // If player have lives.
@@ -98,11 +107,13 @@ public class GameManager:MonoBehaviour
       // Actualize text.
       HudIcons.Instance.LivesSet(Instance.player_lives);
       // Respawn player.
-      StartCoroutine(PlayerRespawn(3.0F));
+      Instance.respawn_cor = StartCoroutine(PlayerRespawn(3.0F));
     }
     // If player don't have lives.
     else
     {
+      // Stop coroutines.
+      StopCoroutine(Instance.lvl_timer_cor);
       // Load lose screen.
       LevelManager.Instance.SceneLoad(LevelManager.Scenes.LOSE,3.0F);
     }
@@ -111,17 +122,8 @@ public class GameManager:MonoBehaviour
   // Return flag if spawning of hazards is enabled.
   public bool IsSpawningEnabled()
   {
-    return this.is_spawning_enabled;
+    return Instance.is_spawning_enabled;
   } // End of IsSpawningEnabled
-
-  // Event - on score increase.
-  public void ScoreIncrease(int val)
-  {
-    // Actualize score.
-    Instance.score += val;
-    // Actualize text.
-    HudIcons.Instance.ScoreSet(Instance.score);
-  } // End of ScoreIncrease
 
   #endregion
 
@@ -156,43 +158,60 @@ public class GameManager:MonoBehaviour
     Instance.player_lives = Instance.init_player_lives;
   } // End of Start
 
-  // Update (called once per frame).
-  void Update()
-  {
-    // If there is hud.
-    if(HudIcons.Instance != null)
-    {
-      // Actualize progress.
-      HudIcons.Instance.TimeSet(this.lvl_time-Time.timeSinceLevelLoad);
-    }
-  } // End of Update
-
   // Event - on level was loaded.
   private void OnLevelWasLoaded(int level)
   {
-    // If not level then exit from function.
+    // Stop coroutines.
+    if(Instance.wave_cor != null)
+    {
+      StopCoroutine(Instance.wave_cor);
+    }
+    if(Instance.respawn_cor != null)
+    {
+      StopCoroutine(Instance.respawn_cor);
+    }
+    // If level was not loaded then exit from function.
     if(LevelManager.Instance.CurLvlGet()==LevelManager.Lvls.NONE)
     {
       return;
     }
     // Instantiate player.
-    this.player=Instantiate(this.player_prefab);
+    Instantiate(Instance.player_prefab);
     // Prepare HUD values.
-    HudIcons.Instance.TimePrepare(0.0F,this.lvl_time);
-    HudIcons.Instance.HealthPrepare(0.0F,this.player.GetComponent<PlayerHealth>().InitHealthGet());
+    HudIcons.Instance.TimePrepare(0.0F,Instance.lvl_time);
     // Set HUD values.
-    HudIcons.Instance.TimeSet(this.lvl_time);
+    HudIcons.Instance.TimeSet(Instance.lvl_time);
     HudIcons.Instance.LivesSet(Instance.player_lives);
     HudIcons.Instance.ScoreSet(Instance.score);
-    // If first level.
-    if(LevelManager.Instance.CurLvlGet()==LevelManager.Lvls.Lvl_01)
-    {
-      // Enable GUI camera.
-      GameObject.FindGameObjectWithTag("hud_camera").GetComponent<Camera>().enabled=true;
-    }
+    // MN:TO_DO: Hotfix for HUD camera (want show hud in second level). 
+    // Enable GUI camera.
+    GameObject.FindGameObjectWithTag("hud_camera").GetComponent<Camera>().enabled=false;
+    GameObject.FindGameObjectWithTag("hud_camera").GetComponent<Camera>().enabled=true;
+    // Start level timer.
+    Instance.lvl_timer_cor = StartCoroutine(LevelTimer());
     // Manage hazards and enemies waves.
-    StartCoroutine(WaveManage());
+    Instance.wave_cor = StartCoroutine(WaveManage());
   } // End of OnLevelWasLoaded
+
+  // Level timer.
+  private IEnumerator LevelTimer()
+  {
+    // Loop.
+    while(true)
+    {
+      // Wait for seconds.
+      yield return new WaitForSeconds(1);
+      // Actualize progress.
+      HudIcons.Instance.TimeSet(Instance.lvl_time-Time.timeSinceLevelLoad);
+      // If time has ended then break loop.
+      if(Instance.lvl_time-Time.timeSinceLevelLoad<0)
+      {
+        break;
+      }
+    }
+    // Load next level.
+    LevelManager.Instance.LvlLoadNext(0.0F,true);
+  } // End of LevelTimer
 
   // Respawn player.
   private IEnumerator PlayerRespawn(float delay)
@@ -200,25 +219,25 @@ public class GameManager:MonoBehaviour
     // Wait for seconds.
     yield return new WaitForSeconds(delay);
     // Instantiate player.
-    this.player=Instantiate(this.player_prefab);
+    Instantiate(Instance.player_prefab);
   } // End of PlayerRespawn
 
   // Manage hazards and enemies waves.
   private IEnumerator WaveManage()
   {
     // Wait for seconds.
-    yield return new WaitForSeconds(this.wave_start_wait);
+    yield return new WaitForSeconds(Instance.wave_start_wait);
     // Loop.
     while(true)
     {
       // Enable spawning.
-      this.is_spawning_enabled=true;
+      Instance.is_spawning_enabled=true;
       // Wait for seconds.
-      yield return new WaitForSeconds(this.wave_duration);
+      yield return new WaitForSeconds(Instance.wave_duration);
       // Enable spawning.
-      this.is_spawning_enabled=false;
+      Instance.is_spawning_enabled=false;
       // Wait for seconds.
-      yield return new WaitForSeconds(this.wave_break_duration);
+      yield return new WaitForSeconds(Instance.wave_break_duration);
     }
   } // End of WaveManage
 

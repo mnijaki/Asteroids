@@ -51,7 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71158f3f15e1d6842ac3d17e23fe2f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_lives: 3
+  init_player_lives: 3
   wave_duration: 30
-  wave_break_duration: 5
+  wave_break_duration: 7
   wave_start_wait: 3
+  player_prefab: {fileID: 1780877516790510, guid: 5178cf5e4bd46b445a346df56c81d0af,
+    type: 2}

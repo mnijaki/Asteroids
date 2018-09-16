@@ -52,16 +52,18 @@ public class MenuWindowsManager:MonoBehaviour
       return;
     }
     // Open panel of given animator.
-    OpenPanel(this.initialy_open_window_anim);
+    StartCoroutine(OpenPanel(this.initialy_open_window_anim));
   } // End of OnEnable
 
   // Open panel of given animator.
-  public void OpenPanel(Animator anim)
+  public IEnumerator OpenPanel(Animator anim)
   {
+    // MN:TO_DO:Hotfix becaouse of event system is initialising also in 'OnEnable'
+    yield return new WaitForSeconds(0.1F);
     // If there is no animator, that mean there is no window to open so exit from function. 
     if(this.opened_window_anim == anim)
     {
-      return;
+      yield break;
     }
     // Set game object associated with animator as active.
     anim.gameObject.SetActive(true);
