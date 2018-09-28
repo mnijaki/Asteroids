@@ -131,8 +131,9 @@ public class Enemy : MonoBehaviour
   // Physics calculations.
   private void FixedUpdate()
   {
+    // MN:TO_DO:Here is smth wrong, 'dodge_speed' is not working as should).
     // Set ship velocity.
-    this.rbdy.velocity = new Vector3(Mathf.MoveTowards(this.rbdy.velocity.x,this.target_x,Time.deltaTime*this.dodge_speed),
+    this.rbdy.velocity = new Vector3(Mathf.MoveTowards(this.rbdy.velocity.x,this.target_x,this.dodge_speed),
                                      this.rbdy.velocity.y,
                                      this.rbdy.velocity.z);
     // Clamp position.

@@ -285,7 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ship_padding_hor: 2
   ship_speed_vert: 4
-  dodge_speed: 10
+  dodge_speed: 0.1
   dodge_min_range: -3
   dodge_max_range: 3
   dodge_min_duration: 3

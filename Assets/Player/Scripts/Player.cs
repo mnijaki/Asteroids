@@ -98,10 +98,10 @@ public class Player:MonoBehaviour
   // Movement.
   private void PlayerMove()
   {
-    // Add velocity to ship.
-    this.rbdy.velocity = new Vector3(Input.GetAxis("Horizontal")*this.ship_speed_hor,
+    // Add velocity to ship ('Time.deltaTime' should be inside 'Vector3' to not influence 'y' value).
+    this.rbdy.velocity = new Vector3(Input.GetAxis("Horizontal")*this.ship_speed_hor * Time.deltaTime,
                                      this.rbdy.velocity.y,
-                                     Input.GetAxis("Vertical")*this.ship_speed_vert) * Time.deltaTime;
+                                     Input.GetAxis("Vertical")*this.ship_speed_vert * Time.deltaTime);
     // Clamp ship position to game boundries.
     this.transform.position = new Vector3(Mathf.Clamp(this.transform.position.x,this.min_hor,this.max_hor),
                                           this.transform.position.y,
